@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class HumanController : MonoBehaviour
 {
     public Animator anim;
@@ -21,26 +22,34 @@ public class HumanController : MonoBehaviour
     void Update()
     {
         transform.Translate(moveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime, 0f, moveSpeed * Input.GetAxis("Vertical") * Time.deltaTime);
-        if (Input.GetKey("left"))
+        if (Input.GetKey("left") || Input.GetKey("a"))
+        {
+            anim.SetBool("isWalking", true);
+
+        }
+        else if (Input.GetKey("right") || Input.GetKey("d"))
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else if (Input.GetKey("up") || Input.GetKey("w"))
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else if (Input.GetKey("down") || Input.GetKey("s"))
+        {
+            anim.SetBool("runBack", true);
+        }
+       else if (Input.GetKey("left") && Input.GetKey("j"))
         {
             anim.SetBool("isRunning", true);
 
         }
-        else if (Input.GetKey("right"))
-        {
-            anim.SetBool("isRunning", true);
-        }
-        else if (Input.GetKey("up"))
-        {
-            anim.SetBool("isRunning", true);
-        }
-        else if (Input.GetKey("down"))
-        {
-            anim.SetBool("runBack", true);
-        }
-        else { anim.SetBool("isRunning", false);
+        else { anim.SetBool("isWalking", false);
             anim.SetBool("runBack", false);
+            anim.SetBool("isRunning", false);
         }
-        
+  
+      
+
     }
 }
