@@ -15,71 +15,77 @@ public class HumanController : MonoBehaviour
     private string turnInputAxis = "Horizontal";
     public float rotationRate = 180;
     private Rigidbody rb;
-   
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        moveSpeed = 1f;
         anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        float moveAxis = Input.GetAxis(moveInputAxis);
-        float turnAxis = Input.GetAxis(turnInputAxis);
-        ApplyInput(moveAxis, turnAxis);
-
-      
-        if (Input.GetKey("left") || Input.GetKey("right") || Input.GetKey("up"))
+        transform.Translate(0f, 0f, moveSpeed * Input.GetAxis("Vertical") * Time.deltaTime);
+        transform.Rotate(0f, 90f * Input.GetAxis("Horizontal") * Time.deltaTime, 0f);
+        if (Input.GetKey("up") || Input.GetKey("left") || Input.GetKey("right") || Input.GetKey("a") || Input.GetKey("d") || Input.GetKey("w"))
         {
-            anim.SetBool("isWalking", true);
+            if (Input.GetKey(KeyCode.H))
+            {
+                anim.SetBool("isWalking", false);
+                anim.SetBool("isRunning", true);
+            }
+            else
+            {
+                anim.SetBool("isRunning", false);
+                anim.SetBool("isWalking", true);
+            }
+
+
+
+            if (Input.GetKey(KeyCode.Space)) {
+                anim.SetBool("isWalking", false);
+                anim.SetBool("isJumping", true);
+            }
+            else
+            {
+                anim.SetBool("isJumping", false);
+                anim.SetBool("isWalking", true);
+            }
         }
-        else if (Input.GetKey("a") || Input.GetKey("d") || Input.GetKey("w"))
+       
+
+        else if (Input.GetKey("down") || Input.GetKey("s"))
         {
-            anim.SetBool("isWalking", true);
+            if (Input.GetKey(KeyCode.Space))
+            {
+                anim.SetBool("runBack", false);
+                anim.SetBool("isJumping", true);
+            }
+            else
+            {
+                anim.SetBool("isJumping", false);
+                anim.SetBool("runBack", true);
+            }
         }
-        else { anim.SetBool("isWalking", false); }
-
-        if (Input.GetKey("down") || Input.GetKey("s"))
+        else if (Input.GetKey("space"))
         {
-            anim.SetBool("runBack", true);
+          anim.SetBool("isJumping", true);
+       }
+
+        else
+        {
+            anim.SetBool("isWalking", false);
+            anim.SetBool("runBack", false);
+            anim.SetBool("isRunning", false);
+            anim.SetBool("isJumping", false);
         }
-        else { anim.SetBool("runBack", false); }
-
-        //if (Input.GetKey("d"))
-        //{
-        //    if (Input.GetKey("h"))
-        //    {
-        //        anim.SetBool("isRunning", true);
-        //    }
-
-        //}
-        //else { anim.SetBool("isRunning", false); }
-   
-
-
-
 
     }
-
-    private void ApplyInput(float moveInput, float turnInput) {
-        Move(moveInput);
-        Turn(turnInput);
-    }
-
-    private void Move(float input)
-    {
-        //transform.Translate(Vector3.forward * input * moveSpeed);
-        rb.AddForce(transform.forward * input * moveSpeed, ForceMode.Force);
-    }
-
-    private void Turn(float input)
-    {
-        transform.Rotate(0, input * rotationRate * Time.deltaTime, 0);
-    }
-
-
-
 }
+
+
+
+
