@@ -6,68 +6,80 @@ using UnityEngine;
 
 public class HumanController : MonoBehaviour
 {
+    
     public Animator anim;
-    public float moveSpeed;
+    public float moveSpeed = 10f;
 
+
+    private string moveInputAxis = "Vertical";
+    private string turnInputAxis = "Horizontal";
+    public float rotationRate = 180;
+    private Rigidbody rb;
    
     // Start is called before the first frame update
     void Start()
     {
-        moveSpeed = 1f;
-        anim = GetComponent<Animator>();
         
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-    
+        float moveAxis = Input.GetAxis(moveInputAxis);
+        float turnAxis = Input.GetAxis(turnInputAxis);
+        ApplyInput(moveAxis, turnAxis);
 
-        transform.Translate(moveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime, 0f, moveSpeed * Input.GetAxis("Vertical") * Time.deltaTime);
-        if (Input.GetKey("left") || Input.GetKey("a"))
+      
+        if (Input.GetKey("left") || Input.GetKey("right") || Input.GetKey("up"))
         {
             anim.SetBool("isWalking", true);
+        }
+        else if (Input.GetKey("a") || Input.GetKey("d") || Input.GetKey("w"))
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else { anim.SetBool("isWalking", false); }
 
-        }
-        else if (Input.GetKey("right") || Input.GetKey("d"))
-        {
-            anim.SetBool("isWalking", true);
-        }
-        else if (Input.GetKey("up") || Input.GetKey("w"))
-        {
-            anim.SetBool("isWalking", true);
-        }
-        else if (Input.GetKey("down") || Input.GetKey("s"))
+        if (Input.GetKey("down") || Input.GetKey("s"))
         {
             anim.SetBool("runBack", true);
         }
-     /*  else if (Input.GetKey("left") || Input.GetKey("j"))
-        {
-            anim.SetBool("isRunning", true);
+        else { anim.SetBool("runBack", false); }
 
-        }*/
-        else { anim.SetBool("isWalking", false);
-            anim.SetBool("runBack", false);
-            anim.SetBool("isRunning", false);
-        }
+        //if (Input.GetKey("d"))
+        //{
+        //    if (Input.GetKey("h"))
+        //    {
+        //        anim.SetBool("isRunning", true);
+        //    }
 
-       /* if ((GetButtonDown("w") && GetButton("j"))
-    || (GetButtonDown("j") && GetButton("w"))
-   { anim.SetBool("isRunning", true); }
-   */
+        //}
+        //else { anim.SetBool("isRunning", false); }
+   
 
 
 
 
-        }
-
-    /*private bool GetButtonDown(string v)
-    {
-        throw new NotImplementedException();
     }
 
-    private bool GetButton(string v)
+    private void ApplyInput(float moveInput, float turnInput) {
+        Move(moveInput);
+        Turn(turnInput);
+    }
+
+    private void Move(float input)
     {
-        throw new NotImplementedException();
-    }*/
+        //transform.Translate(Vector3.forward * input * moveSpeed);
+        rb.AddForce(transform.forward * input * moveSpeed, ForceMode.Force);
+    }
+
+    private void Turn(float input)
+    {
+        transform.Rotate(0, input * rotationRate * Time.deltaTime, 0);
+    }
+
+
+
 }
