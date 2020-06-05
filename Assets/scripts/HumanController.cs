@@ -28,9 +28,11 @@ public class HumanController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0f, 0f, moveSpeed * Input.GetAxis("Vertical") * Time.deltaTime);
+        transform.Translate(0f, 0f, moveSpeed * Input.GetAxis("Vertical") * Time.deltaTime);  
         transform.Rotate(0f, 90f * Input.GetAxis("Horizontal") * Time.deltaTime, 0f);
-        if (Input.GetKey("up") || Input.GetKey("left") || Input.GetKey("right") || Input.GetKey("a") || Input.GetKey("d") || Input.GetKey("w"))
+
+
+        if (Input.GetKey("up") || Input.GetKey("w"))
         {
             if (Input.GetKey(KeyCode.H))
             {
@@ -45,15 +47,16 @@ public class HumanController : MonoBehaviour
 
 
 
-            if (Input.GetKey(KeyCode.Space)) {
-                anim.SetBool("isWalking", false);
-                anim.SetBool("isJumping", true);
-            }
-            else
-            {
-                anim.SetBool("isJumping", false);
-                anim.SetBool("isWalking", true);
-            }
+            //if (Input.GetKey(KeyCode.Space))
+            //{
+            //    anim.SetBool("isWalking", false);
+            //    anim.SetBool("isJumping", true);
+            //}
+            //else
+            //{
+            //    anim.SetBool("isJumping", false);
+            //    anim.SetBool("isWalking", true);
+            //}
         }
        
 
@@ -72,8 +75,8 @@ public class HumanController : MonoBehaviour
         }
         else if (Input.GetKey("space"))
         {
-          anim.SetBool("isJumping", true);
-       }
+            anim.SetBool("isJumping", true);
+        }
 
         else
         {
