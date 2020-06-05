@@ -4054,7 +4054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn_speed: 0
-  anim: {fileID: 0}
+  anim: {fileID: 95681433750800818, guid: 33b828b8f1c31334988de54e3fe47ee6, type: 3}
   target: {fileID: 460532145}
 --- !u!1 &593371954
 GameObject:
