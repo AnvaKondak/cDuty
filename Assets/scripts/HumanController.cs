@@ -78,7 +78,7 @@ public class HumanController : MonoBehaviour
             anim.SetBool("isJumping", true);
         }
 
-        else if (Input.GetKey("space")) {
+        else if (Input.GetKey(KeyCode.J)) {
             anim.SetBool("isAttacking", true);
         }
 
