@@ -14,7 +14,7 @@ public class HumanController : MonoBehaviour
     private string moveInputAxis = "Vertical";
     private string turnInputAxis = "Horizontal";
     public float rotationRate = 180;
-    private Rigidbody rb;
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +58,7 @@ public class HumanController : MonoBehaviour
             //    anim.SetBool("isWalking", true);
             //}
         }
-       
+
 
         else if (Input.GetKey("down") || Input.GetKey("s"))
         {
@@ -78,12 +78,19 @@ public class HumanController : MonoBehaviour
             anim.SetBool("isJumping", true);
         }
 
+        else if (Input.GetKey("space")) {
+            anim.SetBool("isAttacking", true);
+        }
+
+
+
         else
         {
             anim.SetBool("isWalking", false);
             anim.SetBool("runBack", false);
             anim.SetBool("isRunning", false);
             anim.SetBool("isJumping", false);
+            anim.SetBool("isAttacking", false);
         }
 
     }
