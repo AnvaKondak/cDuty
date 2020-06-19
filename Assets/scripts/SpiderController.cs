@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class SpiderController : MonoBehaviour
 {
-   
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public HealthbarScript healthBar;
 
     public Animator anim;
 
@@ -14,14 +17,17 @@ public class SpiderController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+
 
         anim = GetComponent<Animator>();
       
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()   
     {   Vector3 direction = target.position - this.transform.position;
         //the float angle is resposible for the area where the spider can see
         //the player that will start the chasing.↓↓
@@ -54,15 +60,22 @@ public class SpiderController : MonoBehaviour
             anim.SetBool("isAttacking", false);
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(20);
+        }
+
+        void TakeDamage(int damage)
+        {
+            currentHealth -= damage;
+            healthBar.SetHealth(currentHealth);
+        }
 
 
 
 
 
 
-
-
-   
     }
 
      
